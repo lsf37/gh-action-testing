@@ -21,11 +21,15 @@ jobs:
       - name: event
         run: |
           echo "${{ toJSON(github.event) }}"
-          echo "${{ toJSON(github.event) }}" >> event.json
+          cat >> event.json <<EOF
+          ${{ toJSON(github.event) }}
+          EOF
       - name: all
         run: |
           echo "${{ toJSON(github) }}"
-          echo "${{ toJSON(github) }}" >> all.json
+          cat >> all.json <<EOF
+          ${{ toJSON(github) }}
+          EOF
       - name: upload event
         uses: actions/upload-artifact@v4
         with:
