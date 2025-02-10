@@ -21,6 +21,18 @@ jobs:
       - name: event
         run: |
           echo "${{ toJSON(github.event) }}"
+          echo "${{ toJSON(github.event) }}" >> event.json
       - name: all
         run: |
-          echo ${{ toJSON(github) }}
+          echo "${{ toJSON(github) }}"
+          echo "${{ toJSON(github) }}" >> all.json
+      - name: upload event
+        uses: actions/upload-artifact@v4
+        with:
+          name: event
+          path: event.json
+      - name: upload all
+        uses: actions/upload-artifact@v4
+        with:
+          name: all
+          path: all.json
