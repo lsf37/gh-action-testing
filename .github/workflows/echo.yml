@@ -1,0 +1,27 @@
+name: Echo
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, labeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-pr-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: event_name
+        run: |
+          echo "${{ github.event_name }}"
+      - name: event
+        run: |
+          echo "${{ fromJSON(github.event) }}"
+      - name: all
+        run: |
+          echo ${{ fromJSON(github) }}
+
